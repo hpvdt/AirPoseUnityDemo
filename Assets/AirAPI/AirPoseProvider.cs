@@ -23,6 +23,9 @@ public class AirPoseProvider : BasePoseProvider
     
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
+    
+    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int StopConnection();
 
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
