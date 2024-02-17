@@ -2,7 +2,12 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders />
-    <explicitIncludes />
+    <explicitIncludes>
+      <Path>.gitattributes</Path>
+      <Path>.gitignore</Path>
+      <Path>Assets/AirAPI/libar_drivers.so</Path>
+      <Path>Assets/Plugins</Path>
+    </explicitIncludes>
     <explicitExcludes />
   </component>
 </project>
