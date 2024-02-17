@@ -7,6 +7,9 @@ using UnityEngine.Experimental.XR.Interaction;
 
 public class AirPoseProvider : BasePoseProvider
 {
+    
+    #if WINDOWS
+    
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
 
@@ -18,7 +21,14 @@ public class AirPoseProvider : BasePoseProvider
 
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
+    #elif UNITY_EDITOR_LINUX
+    
+    [DllImport("libar_drivers.so")]
+    public static extern int StartConnection();
 
+    [DllImport("libar_drivers.so")]
+    public static extern IntPtr GetEuler();
+    #endif
 
     // Start is called before the first frame update
     void Start()
