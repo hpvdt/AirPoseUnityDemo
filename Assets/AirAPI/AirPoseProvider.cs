@@ -30,6 +30,9 @@ public class AirPoseProvider : BasePoseProvider
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
     
+    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr GetQuaternion();
+    
 #endif
 
     protected enum ConnectionStates
@@ -129,9 +132,10 @@ public class AirPoseProvider : BasePoseProvider
         var arr = new float[3];
         Marshal.Copy(ptr, arr, 0, 3);
 
-        // Debug.Log("glasses input (Euler): " + arr);
-
         var reading = Quaternion.Euler(-arr[1] + 90.0f, -arr[2], -arr[0]);
+        
+        Debug.Log("glasses input (Euler): " + reading.eulerAngles.ToString());
+        
         if (connectionState == ConnectionStates.StandBy)
         {
             if (!reading.Equals(NO_READING_Q))
