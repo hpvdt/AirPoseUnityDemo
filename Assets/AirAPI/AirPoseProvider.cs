@@ -33,6 +33,9 @@ public class AirPoseProvider : BasePoseProvider
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetQuaternion();
     
+    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr Dummy();
+    
 #endif
 
     protected enum ConnectionStates
@@ -126,15 +129,32 @@ public class AirPoseProvider : BasePoseProvider
         return PoseDataFlags.Rotation;
     }
 
-    private void UpdateFromGlasses()
+    
+    private float[] RawDummy()
+    {
+        var ptr = Dummy();
+        var r = new float[3];
+        Marshal.Copy(ptr, r, 0, 3);
+        return r;
+    }
+    
+    private float[] RawEuler()
     {
         var ptr = GetEuler();
-        var arr = new float[3];
-        Marshal.Copy(ptr, arr, 0, 3);
+        var r = new float[3];
+        Marshal.Copy(ptr, r, 0, 3);
+        return r;
+    }
+    
+    private void UpdateFromGlasses()
+    {
+        // var arr = RawDummy();
+        
+        var arr = RawEuler();
+        
+        Debug.Log("glasses input: " + new Vector3(arr[0], arr[1], -arr[2]).ToString());
 
         var reading = Quaternion.Euler(-arr[1] + 90.0f, -arr[2], -arr[0]);
-        
-        Debug.Log("glasses input (Euler): " + reading.eulerAngles.ToString());
         
         if (connectionState == ConnectionStates.StandBy)
         {
