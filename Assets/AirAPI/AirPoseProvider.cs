@@ -152,7 +152,7 @@ public class AirPoseProvider : BasePoseProvider
         
         var arr = RawEuler();
         
-        Debug.Log("glasses input: " + new Vector3(arr[0], arr[1], -arr[2]).ToString());
+        // Debug.Log("glasses input: " + new Vector3(arr[0], arr[1], -arr[2]).ToString());
 
         var reading = Quaternion.Euler(-arr[1] + 90.0f, -arr[2], -arr[0]);
         
