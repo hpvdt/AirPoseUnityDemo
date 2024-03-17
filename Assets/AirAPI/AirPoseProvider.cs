@@ -36,6 +36,14 @@ public class AirPoseProvider : BasePoseProvider
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr Dummy();
     
+    private float[] RawDummy()
+    {
+        var ptr = Dummy();
+        var r = new float[3];
+        Marshal.Copy(ptr, r, 0, 3);
+        return r;
+    }
+    
 #endif
 
     protected enum ConnectionStates
@@ -127,15 +135,6 @@ public class AirPoseProvider : BasePoseProvider
 
         output = new Pose(new Vector3(0, 0, 0), compound);
         return PoseDataFlags.Rotation;
-    }
-
-    
-    private float[] RawDummy()
-    {
-        var ptr = Dummy();
-        var r = new float[3];
-        Marshal.Copy(ptr, r, 0, 3);
-        return r;
     }
     
     private float[] RawEuler()
