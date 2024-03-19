@@ -102,7 +102,8 @@ public class AirPoseProvider : BasePoseProvider
 
     protected Quaternion FromGlasses = Quaternion.identity;
 
-    protected static Quaternion NO_READING_Q = Quaternion.Euler(90f, 0, 0);
+    // protected static Quaternion ZERO_READING_Q = Quaternion.Euler(90f, 0, 0);
+    protected static Quaternion ZERO_READING_Q = Quaternion.Euler(0f, 0, 0);
 
     protected Vector3 FromMouse_Euler = Vector3.zero;
     protected Quaternion FromMouse = Quaternion.identity;
@@ -150,14 +151,17 @@ public class AirPoseProvider : BasePoseProvider
         // var arr = RawDummy();
         
         var arr = RawEuler();
+        var yaw = arr[0];
+        var pitch = arr[1];
+        var roll = arr[2];
         
         // Debug.Log("glasses input: " + new Vector3(arr[0], arr[1], -arr[2]).ToString());
 
-        var reading = Quaternion.Euler(-arr[1] + 90.0f, -arr[2], -arr[0]);
+        var reading = ZERO_READING_Q * Quaternion.Euler(-pitch, roll, -yaw);
         
         if (connectionState == ConnectionStates.StandBy)
         {
-            if (!reading.Equals(NO_READING_Q))
+            if (!reading.Equals(ZERO_READING_Q))
             {
                 connectionState = ConnectionStates.Connected;
                 Debug.Log("Glasses connected, start reading");

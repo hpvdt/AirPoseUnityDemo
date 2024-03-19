@@ -10,7 +10,5 @@ TARGET="$FWDIR/Assets/Plugins/libar_drivers.so"
 cp $FWDIR/ar-drivers-rs/target/release/libar_drivers.so $TARGET && \
 echo "Copied to $TARGET"
 
-echo "Please give sudo permission to open access to hidraw device(s) ..."
-sudo chmod 777 /dev/hidraw*
-echo "... permission granted"
+source "$FWDIR/ar-drivers-rs/before.sh"
 
