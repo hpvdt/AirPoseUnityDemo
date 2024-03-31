@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Experimental.XR.Interaction;
 using UnityEngine.SpatialTracking;
+
 public class AirPoseProvider : BasePoseProvider
 {
 #if UNITY_EDITOR_WIN
@@ -32,17 +33,6 @@ public class AirPoseProvider : BasePoseProvider
     
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetQuaternion();
-    
-    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr Dummy();
-    
-    private float[] RawDummy()
-    {
-        var ptr = Dummy();
-        var r = new float[3];
-        Marshal.Copy(ptr, r, 0, 3);
-        return r;
-    }
     
 #endif
 
@@ -84,17 +74,17 @@ public class AirPoseProvider : BasePoseProvider
             if (code == 1)
             {
                 connectionState = ConnectionStates.Disconnected;
-                Debug.Log("Glass disconnected");
+                Debug.Log("Glassed disconnected");
             }
             else
             {
                 connectionState = ConnectionStates.Offline;
-                Debug.LogWarning("Glass disconnected with error: return code " + code);
+                Debug.LogWarning("Glassed disconnected with error: return code " + code);
             }
         }
         else
         {
-            Debug.Log("Glass not connected, no need to disconnect");
+            Debug.Log("Glassed not connected, no need to disconnect");
         }
     }
 
@@ -102,8 +92,8 @@ public class AirPoseProvider : BasePoseProvider
 
     protected Quaternion FromGlasses = Quaternion.identity;
 
-    // protected static Quaternion ZERO_READING_Q = Quaternion.Euler(90f, 0, 0);
-    protected static Quaternion ZERO_READING_Q = Quaternion.Euler(0f, 0, 0);
+    protected static Quaternion ZERO_READING_Q = Quaternion.Euler(90f, 0, 0);
+    // protected static Quaternion ZERO_READING_Q = Quaternion.Euler(0f, 0, 0);
 
     protected Vector3 FromMouse_Euler = Vector3.zero;
     protected Quaternion FromMouse = Quaternion.identity;
@@ -154,8 +144,6 @@ public class AirPoseProvider : BasePoseProvider
         var yaw = arr[0];
         var pitch = arr[1];
         var roll = arr[2];
-        
-        // Debug.Log("glasses input: " + new Vector3(arr[0], arr[1], -arr[2]).ToString());
 
         var reading = ZERO_READING_Q * Quaternion.Euler(-pitch, roll, -yaw);
         
