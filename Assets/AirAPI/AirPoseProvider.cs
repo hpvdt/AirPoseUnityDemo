@@ -20,7 +20,7 @@ public class AirPoseProvider : BasePoseProvider
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
     
-#elif UNITY_EDITOR_LINUX
+#else
     
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
