@@ -145,7 +145,8 @@ public class AirPoseProvider : BasePoseProvider
         var pitch = arr[1];
         var roll = arr[2];
 
-        var reading = ZERO_READING_Q * Quaternion.Euler(-pitch, roll, -yaw);
+        // var reading = ZERO_READING_Q * Quaternion.Euler(-pitch, roll, -yaw);
+        var reading = Quaternion.Euler(-pitch + 90f, -roll, -yaw);
         
         if (connectionState == ConnectionStates.StandBy)
         {
