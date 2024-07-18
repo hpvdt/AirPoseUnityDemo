@@ -1,13 +1,14 @@
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Experimental.XR.Interaction;
 using UnityEngine.SpatialTracking;
 
 public class AirPoseProvider : BasePoseProvider
 {
 #if UNITY_EDITOR_WIN
-    
+
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
 
@@ -19,9 +20,8 @@ public class AirPoseProvider : BasePoseProvider
 
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
-    
+
 #else
-    
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
     
@@ -33,7 +33,7 @@ public class AirPoseProvider : BasePoseProvider
     
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetQuaternion();
-    
+
 #endif
 
     protected enum ConnectionStates
@@ -90,16 +90,15 @@ public class AirPoseProvider : BasePoseProvider
 
     public float mouseSensitivity = 100.0f;
 
-    protected Quaternion FromGlasses = Quaternion.identity;
+    private Quaternion _fromGlasses = Quaternion.identity;
 
-    protected static Quaternion ZERO_READING_Q = Quaternion.Euler(90f, 0, 0);
-    // protected static Quaternion ZERO_READING_Q = Quaternion.Euler(0f, 0, 0);
+    private static readonly Quaternion Qid = Quaternion.identity.normalized;
 
-    protected Vector3 FromMouse_Euler = Vector3.zero;
-    protected Quaternion FromMouse = Quaternion.identity;
+    private Vector3 _fromMouseEuler = Vector3.zero;
+    private Quaternion _fromMouse = Quaternion.identity;
 
-    protected Vector3 FromZeroing_Euler = Vector3.zero;
-    protected Quaternion FromZeroing = Quaternion.identity;
+    private Vector3 _fromZeroingEuler = Vector3.zero;
+    private Quaternion _fromZeroing = Quaternion.identity;
 
     // Start is called before the first frame update
     private void Start()
@@ -122,44 +121,94 @@ public class AirPoseProvider : BasePoseProvider
             UpdateFromMouse();
         }
 
-        var compound = FromMouse * FromZeroing * FromGlasses;
+        var compound = _fromMouse * _fromZeroing * _fromGlasses;
 
         output = new Pose(new Vector3(0, 0, 0), compound);
         return PoseDataFlags.Rotation;
     }
-    
-    private float[] RawEuler()
+
+    private float[] GetEulerArray()
     {
         var ptr = GetEuler();
         var r = new float[3];
         Marshal.Copy(ptr, r, 0, 3);
         return r;
     }
-    
+
+    private static readonly Quaternion QNeutral = Quaternion.Euler(90f, 0f, 0f).normalized;
+
+    private Quaternion GetQuaternion_direct()
+    {
+        var ptr = GetQuaternion();
+        // always in WXYZ order
+        // see https://github.com/xioTechnologies/Fusion/blob/e7d2b41e6506fa9c85492b91becf003262f14977/Fusion/FusionMath.h#L36
+
+        var arr = new float[4];
+        Marshal.Copy(ptr, arr, 0, 4);
+
+        var qRaw = new Quaternion(-arr[1], -arr[3], -arr[2], arr[0]);
+        // chiral conversion
+        // see https://stackoverflow.com/questions/28673777/convert-quaternion-from-right-handed-to-left-handed-coordinate-system
+
+        var q = qRaw * QNeutral;
+        // var q = Quaternion.Euler(qRaw.eulerAngles + new Vector3(0f, 0f, 0f));
+        return q;
+    }
+
+    private Quaternion GetQuaternion_fromEuler()
+    {
+        // yaw : Up-Down, pitch : Left-Right, roll : Forward-Backward
+
+        // receiving data in right-hand BLD frame?
+        // chosen to be compatible with alternative Windows driver (https://github.com/wheaney/OpenVR-xrealAirGlassesHMD)
+
+        var arr = GetEulerArray();
+        var roll = arr[0];
+        var pitch = arr[1];
+        var yaw = arr[2];
+
+        var r = Quaternion.Euler(-pitch + 90f, -yaw, -roll);
+
+        return r;
+    }
+
+    private Quaternion GetQuaternion_verified()
+    {
+        var r1 = GetQuaternion_direct();
+        var r2 = GetQuaternion_fromEuler();
+
+        var errorBound = 10f;
+        Debug.Assert(r1 == r1.normalized);
+        Debug.Assert(r2 == r2.normalized);
+
+        var error = r1.eulerAngles - r2.eulerAngles; // TODO: need 360 degree wrap-around
+
+        Debug.Assert(error.magnitude <= errorBound,
+            $"error = {error}");
+
+        var reading = r1;
+        return reading;
+    }
+
     private void UpdateFromGlasses()
     {
-        // var arr = RawDummy();
-        
-        var arr = RawEuler();
-        var yaw = arr[0];
-        var pitch = arr[1];
-        var roll = arr[2];
+        var reading = GetQuaternion_verified();
 
-        // var reading = ZERO_READING_Q * Quaternion.Euler(-pitch, roll, -yaw);
-        var reading = Quaternion.Euler(-pitch + 90f, -roll, -yaw);
-        
+        var effective = reading;
+        // var effective = (reading * Q_NEUTRAL).normalized;
+
         if (connectionState == ConnectionStates.StandBy)
         {
-            if (!reading.Equals(ZERO_READING_Q))
+            if (!reading.Equals(Qid))
             {
                 connectionState = ConnectionStates.Connected;
                 Debug.Log("Glasses connected, start reading");
-                FromGlasses = reading;
+                _fromGlasses = effective;
             }
         }
         else
         {
-            FromGlasses = reading;
+            _fromGlasses = effective;
         }
     }
 
@@ -169,17 +218,17 @@ public class AirPoseProvider : BasePoseProvider
         var deltaX = -Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
         // Mouse & Unity XY axis are opposite
 
-        FromMouse_Euler += new Vector3(deltaX, deltaY, 0.0f);
+        _fromMouseEuler += new Vector3(deltaX, deltaY, 0.0f);
 
         // Debug.Log("mouse pressed:" + FromMouseXY);
 
-        FromMouse = Quaternion.Euler(-FromMouse_Euler);
+        _fromMouse = Quaternion.Euler(-_fromMouseEuler);
     }
 
     public void ZeroY()
     {
-        var fromGlassesY = (FromGlasses * FromMouse).eulerAngles.y;
-        FromZeroing_Euler.y = -fromGlassesY;
-        FromZeroing = Quaternion.Euler(FromZeroing_Euler);
+        var fromGlassesY = (_fromGlasses * _fromMouse).eulerAngles.y;
+        _fromZeroingEuler.y = -fromGlassesY;
+        _fromZeroing = Quaternion.Euler(_fromZeroingEuler);
     }
 }
