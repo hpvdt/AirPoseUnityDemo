@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Experimental.XR.Interaction;
@@ -8,7 +9,6 @@ using UnityEngine.SpatialTracking;
 public class AirPoseProvider : BasePoseProvider
 {
 #if UNITY_EDITOR_WIN
-
     [DllImport("AirAPI_Windows", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
 
@@ -24,13 +24,13 @@ public class AirPoseProvider : BasePoseProvider
 #else
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StartConnection();
-    
+
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern int StopConnection();
 
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetEuler();
-    
+
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetQuaternion();
 
@@ -137,10 +137,13 @@ public class AirPoseProvider : BasePoseProvider
 
     private static readonly Quaternion QNeutral = Quaternion.Euler(90f, 0f, 0f).normalized;
 
+    // the following rules are chosen to be
+    //  compatible with alternative Windows driver (https://github.com/wheaney/OpenVR-xrealAirGlassesHMD)
+
     private Quaternion GetQuaternion_direct()
     {
         var ptr = GetQuaternion();
-        // always in WXYZ order
+        // receiving in WXYZ order (right hand)
         // see https://github.com/xioTechnologies/Fusion/blob/e7d2b41e6506fa9c85492b91becf003262f14977/Fusion/FusionMath.h#L36
 
         var arr = new float[4];
@@ -150,6 +153,7 @@ public class AirPoseProvider : BasePoseProvider
         // chiral conversion
         // see https://stackoverflow.com/questions/28673777/convert-quaternion-from-right-handed-to-left-handed-coordinate-system
 
+        // neutral position is 90 degree downward
         var q = qRaw * QNeutral;
         // var q = Quaternion.Euler(qRaw.eulerAngles + new Vector3(0f, 0f, 0f));
         return q;
@@ -157,19 +161,41 @@ public class AirPoseProvider : BasePoseProvider
 
     private Quaternion GetQuaternion_fromEuler()
     {
-        // yaw : Up-Down, pitch : Left-Right, roll : Forward-Backward
-
-        // receiving data in right-hand BLD frame?
-        // chosen to be compatible with alternative Windows driver (https://github.com/wheaney/OpenVR-xrealAirGlassesHMD)
-
         var arr = GetEulerArray();
+        // receiving in BLD order (right hand axis, right hand rotation)
+        // Backward - roll
+        // Left - pitch
+        // Down - yaw
+
         var roll = arr[0];
         var pitch = arr[1];
         var yaw = arr[2];
 
         var r = Quaternion.Euler(-pitch + 90f, -yaw, -roll);
+        // chiral and axis conversion
+        //  to RUF order (left hand axis, right hand rotation)
+        // neutral position is 90 degree downward
 
         return r;
+    }
+
+    public static Vector3 ClampTo180(Vector3 v)
+    {
+        return new Vector3(
+            ClampAngle180(v.x),
+            ClampAngle180(v.y),
+            ClampAngle180(v.z)
+        );
+    }
+
+    private static float ClampAngle180(float angle)
+    {
+        angle = angle % 360;
+        if (angle > 180)
+            angle -= 360;
+        else if (angle < -180)
+            angle += 360;
+        return angle;
     }
 
     private Quaternion GetQuaternion_verified()
@@ -177,11 +203,11 @@ public class AirPoseProvider : BasePoseProvider
         var r1 = GetQuaternion_direct();
         var r2 = GetQuaternion_fromEuler();
 
-        var errorBound = 10f;
+        var errorBound = 5f;
         Debug.Assert(r1 == r1.normalized);
         Debug.Assert(r2 == r2.normalized);
 
-        var error = r1.eulerAngles - r2.eulerAngles; // TODO: need 360 degree wrap-around
+        var error = ClampTo180(r1.eulerAngles - r2.eulerAngles);
 
         Debug.Assert(error.magnitude <= errorBound,
             $"error = {error}");
