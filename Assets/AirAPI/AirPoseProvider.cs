@@ -1,9 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.XR.Interaction;
 using UnityEngine.SpatialTracking;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class AirPoseProvider : BasePoseProvider
 {
@@ -149,9 +150,15 @@ public class AirPoseProvider : BasePoseProvider
 
         var qRaw = new Quaternion(-arr[1], -arr[3], -arr[2], arr[0]);
 
+        Debug.Log($"Quaternion before: {qRaw.x}, {qRaw.y}, {qRaw.z}, {qRaw.w}");
+        
         var q = qRaw * QNeutral;
 
+
+        Debug.Log($"Quaternion after: {q.x}, {q.y}, {q.z}, {q.w}");
+
         // converting to IKJW order (right hand)
+        // sequence (1, -3, -2, 0) is for chiral conversion
         // see https://stackoverflow.com/questions/28673777/convert-quaternion-from-right-handed-to-left-handed-coordinate-system
         // neutral position is 90 degree pitch downward
 
@@ -240,7 +247,7 @@ public class AirPoseProvider : BasePoseProvider
                 $"fwd = {fwd} ; rev = {rev} ; angle = {angle}");
         }
 
-        var reading = r2;
+        var reading = r1;
         return reading;
     }
 
