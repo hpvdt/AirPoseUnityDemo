@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Experimental.XR.Interaction;
 using UnityEngine.SpatialTracking;
 
@@ -62,7 +61,9 @@ public class AirPoseProvider : BasePoseProvider
             Debug.Log("Glasses standing by");
         }
         else
+        {
             Debug.LogError("Connection error: return code " + code);
+        }
     }
 
 
@@ -116,10 +117,7 @@ public class AirPoseProvider : BasePoseProvider
     {
         if (IsConnecting()) UpdateFromGlasses();
 
-        if (Input.GetMouseButton(1))
-        {
-            UpdateFromMouse();
-        }
+        if (Input.GetMouseButton(1)) UpdateFromMouse();
 
         var compound = _fromMouse * _fromZeroing * _fromGlasses;
 
@@ -143,38 +141,45 @@ public class AirPoseProvider : BasePoseProvider
     private Quaternion GetQuaternion_direct()
     {
         var ptr = GetQuaternion();
-        // receiving in WXYZ order (right hand)
+        // receiving in WIJK order (left hand)
         // see https://github.com/xioTechnologies/Fusion/blob/e7d2b41e6506fa9c85492b91becf003262f14977/Fusion/FusionMath.h#L36
 
         var arr = new float[4];
         Marshal.Copy(ptr, arr, 0, 4);
 
         var qRaw = new Quaternion(-arr[1], -arr[3], -arr[2], arr[0]);
-        // chiral conversion
-        // see https://stackoverflow.com/questions/28673777/convert-quaternion-from-right-handed-to-left-handed-coordinate-system
 
-        // neutral position is 90 degree downward
         var q = qRaw * QNeutral;
-        // var q = Quaternion.Euler(qRaw.eulerAngles + new Vector3(0f, 0f, 0f));
+
+        // converting to IKJW order (right hand)
+        // see https://stackoverflow.com/questions/28673777/convert-quaternion-from-right-handed-to-left-handed-coordinate-system
+        // neutral position is 90 degree pitch downward
+
         return q;
     }
 
     private Quaternion GetQuaternion_fromEuler()
     {
         var arr = GetEulerArray();
-        // receiving in BLD order (right hand axis, right hand rotation)
-        // Backward - roll
-        // Left - pitch
-        // Down - yaw
+        // receiving in FRU order (left hand axes, right hand rotation)
+        // Forward - roll
+        // Right - pitch
+        // Up - yaw
 
         var roll = arr[0];
         var pitch = arr[1];
         var yaw = arr[2];
 
-        var r = Quaternion.Euler(-pitch + 90f, -yaw, -roll);
-        // chiral and axis conversion
-        //  to RUF order (left hand axis, right hand rotation)
-        // neutral position is 90 degree downward
+        var arr2 = new Vector3(-(pitch - 90f), -yaw, -roll);
+        var r = Quaternion.Euler(arr2[0], arr2[1], arr2[2]);
+
+        Debug.Log($"Euler: {arr2[0]}, {arr2[1]}, {arr2[2]}");
+
+        // converting to LDB order (right hand axes, right hand rotation)
+        // Left - pitch
+        // Down - yaw
+        // Backward - roll
+        // neutral position is 90 degree pitch downward
 
         return r;
     }
@@ -203,16 +208,39 @@ public class AirPoseProvider : BasePoseProvider
         var r1 = GetQuaternion_direct();
         var r2 = GetQuaternion_fromEuler();
 
-        var errorBound = 5f;
+        var errorBound = 1f;
         Debug.Assert(r1 == r1.normalized);
         Debug.Assert(r2 == r2.normalized);
 
-        var error = ClampTo180(r1.eulerAngles - r2.eulerAngles);
+        // {
+        //     var error = ClampTo180(r1.eulerAngles - r2.eulerAngles);
+        //
+        //     Debug.Assert(error.magnitude <= errorBound,
+        //         $"error = {error}");
+        // }
 
-        Debug.Assert(error.magnitude <= errorBound,
-            $"error = {error}");
+        {
+            Vector3 fwd;
+            {
+                var q = Quaternion.Inverse(r1) * r2;
+                Debug.Assert(r1 * q == r2, "fwd error!");
+                fwd = ClampTo180(q.eulerAngles);
+            }
 
-        var reading = r1;
+            Vector3 rev;
+            {
+                var q = Quaternion.Inverse(r2) * r1;
+                Debug.Assert(r2 * q == r1, "rev error!");
+                rev = ClampTo180(q.eulerAngles);
+            }
+
+            var angle = Quaternion.Angle(r1, r2);
+
+            Debug.Assert(fwd.magnitude <= errorBound,
+                $"fwd = {fwd} ; rev = {rev} ; angle = {angle}");
+        }
+
+        var reading = r2;
         return reading;
     }
 
