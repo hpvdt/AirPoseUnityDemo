@@ -105,7 +105,7 @@ public class AirPoseProvider : BasePoseProvider
 
     private static readonly Quaternion Qid = Quaternion.identity.normalized;
 
-    public class Attitude
+    public class IAttitude
     {
         public Quaternion Glasses = Quaternion.identity;
         public Quaternion Mouse = Quaternion.identity;
@@ -149,6 +149,7 @@ public class AirPoseProvider : BasePoseProvider
             // neutral position is 90 degree pitch downward
 
             var q = qRaw * QNeutral;
+            // var q = qRaw * QNeutral;
             // Debug.Log($"Quaternion after: {q.x}, {q.y}, {q.z}, {q.w}");
             return q;
         }
@@ -174,8 +175,8 @@ public class AirPoseProvider : BasePoseProvider
             // Backward - roll
             // neutral position is 90 degree pitch downward
 
-            var r = Quaternion.Euler(arr2[0], arr2[1], arr2[2]);
-            return r;
+            var q = Quaternion.Euler(arr2[0], arr2[1], arr2[2]);
+            return q;
         }
 
 
@@ -228,7 +229,12 @@ public class AirPoseProvider : BasePoseProvider
         }
     }
 
-    protected Attitude _attitude = new Attitude();
+    private readonly IAttitude _attitude = new IAttitude();
+
+    protected virtual IAttitude Attitude
+    {
+        get => _attitude;
+    }
 
     public class Translation // TODO: enable it
     {
@@ -251,11 +257,11 @@ public class AirPoseProvider : BasePoseProvider
     // Update Pose
     public override PoseDataFlags GetPoseFromProvider(out Pose output)
     {
-        if (IsConnecting()) _attitude.UpdateFromGlasses();
+        if (IsConnecting()) Attitude.UpdateFromGlasses();
 
-        if (Input.GetMouseButton(1)) _attitude.UpdateFromMouse();
+        if (Input.GetMouseButton(1)) Attitude.UpdateFromMouse();
 
-        var compound = _attitude.Mouse * _attitude.Zeroing * _attitude.Glasses;
+        var compound = Attitude.Mouse * Attitude.Zeroing * Attitude.Glasses;
 
         output = new Pose(new Vector3(0, 0, 0), compound);
         return PoseDataFlags.Rotation;
