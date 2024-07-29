@@ -4,8 +4,12 @@ using Vector3 = UnityEngine.Vector3;
 
 public class AirPoseProvider_debugging : AirPoseProvider
 {
-    class Attitude_debugging : IAttitude
+    class Rotation_debugging : Rotation
     {
+        public Rotation_debugging(AirPoseProvider outer) : base(outer)
+        {
+        }
+
         private static Vector3 ClampTo180(Vector3 v)
         {
             return new Vector3(
@@ -31,8 +35,8 @@ public class AirPoseProvider_debugging : AirPoseProvider
             var r2 = Read_euler();
 
             var errorBound = 10f;
-            Debug.Assert(r1 == r1.normalized);
-            Debug.Assert(r2 == r2.normalized);
+            Debug.Assert(r1 == r1.normalized, "unnormalised quaternion");
+            Debug.Assert(r2 == r2.normalized, "unnormalised quaternion from Euler angle");
 
             // {
             //     var error = ClampTo180(r1.eulerAngles - r2.eulerAngles);
@@ -62,15 +66,24 @@ public class AirPoseProvider_debugging : AirPoseProvider
                     $"fwd = {fwd} ; rev = {rev} ; angle = {angle}");
             }
 
-            var reading = r2;
-            return reading;
+
+            if (Outer.useQuaternion)
+            {
+                return r1;
+            }
+            else
+            {
+                return r2;
+            }
         }
     }
 
-    protected IAttitude _attitude = new Attitude_debugging();
-
-    protected override IAttitude Attitude
+    protected override Rotation Attitude
     {
-        get => _attitude;
+        get
+        {
+            if (AttitudeVar == null) AttitudeVar = new Rotation_debugging(this);
+            return AttitudeVar;
+        }
     }
 }
