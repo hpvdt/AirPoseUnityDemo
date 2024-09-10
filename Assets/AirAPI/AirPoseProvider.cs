@@ -40,18 +40,18 @@ public class AirPoseProvider : BasePoseProvider
     [DllImport("libar_drivers.dylib", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetQuaternion();
 
-#elif UNITY_EMBEDDED_LINUX
-    [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int StartConnection();
-
-    [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int StopConnection();
-
-    [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr GetEuler();
-
-    [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr GetQuaternion();
+// #elif UNITY_EMBEDDED_LINUX
+//     [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
+//     public static extern int StartConnection();
+//
+//     [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
+//     public static extern int StopConnection();
+//
+//     [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
+//     public static extern IntPtr GetEuler();
+//
+//     [DllImport("libar_drivers_arm.so", CallingConvention = CallingConvention.Cdecl)]
+//     public static extern IntPtr GetQuaternion();
 
 #else
     [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
