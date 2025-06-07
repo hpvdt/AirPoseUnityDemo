@@ -178,7 +178,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.6",
+      "version": "1.9.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -220,7 +220,7 @@
       "url": "https://packages.unity.com"
     },
     "com.yasirkula.ingamedebugconsole": {
-      "version": "1.8.0",
+      "version": "1.8.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
