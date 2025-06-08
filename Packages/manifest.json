@@ -46,7 +46,9 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "ca.hpvdt.mavlinkapi": "file:MAVLinkAPI/MAVLinkAPI",
+    "ca.hpvdt.repack.tablelayout": "file:MAVLinkAPI/TableLayout"
   },
   "scopedRegistries": [
     {
@@ -54,6 +56,10 @@
       "url": "http://package.openupm.com",
       "scopes": [
         "com.tayx.graphy",
+        "io.github.gkngkc.unity-standalone-file-browser",
+        "com.yamldotnet.uni",
+        "com.unity.uiextensions",
+        "com.jonagill.autofill",
         "com.yasirkula.ingamedebugconsole"
       ]
     }

@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Url: http://package.openupm.com
     m_Scopes:
     - com.tayx.graphy
+    - io.github.gkngkc.unity-standalone-file-browser
+    - com.yamldotnet.uni
+    - com.unity.uiextensions
+    - com.jonagill.autofill
     - com.yasirkula.ingamedebugconsole
     m_IsDefault: 0
     m_Capabilities: 0
