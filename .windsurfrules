@@ -12,4 +12,5 @@
 - compile the project often to verify your work
 - any field or variable annotated with `[Required]` cannot be null, do not check if they are null
 - make sure each edit is minimal, avoid syntax-only change
+- do not delete existing comment
 - when executing unit tests or integration tests, use batch mode count the number of tests executed and the number of tests passed
