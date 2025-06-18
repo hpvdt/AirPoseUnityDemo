@@ -91,7 +91,7 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.5",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -198,7 +198,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.7",
+      "version": "1.9.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -247,7 +247,7 @@
       "url": "http://package.openupm.com"
     },
     "com.yasirkula.ingamedebugconsole": {
-      "version": "1.8.1",
+      "version": "1.8.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
