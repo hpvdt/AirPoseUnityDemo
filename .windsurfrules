@@ -10,6 +10,7 @@
 
 # Rules
 - avoid using GUID in asmdef files
+- avoid using non-nullable field in public struct, null safety cannot be guaranteed by C# 9 compiler
 - build with dotnet to figure out build errors
 - compile the project often to verify your work
 - any field or variable annotated with `[Required]` cannot be null, do not check if they are null
@@ -17,4 +18,5 @@
 
 # Global rules
 - make sure each edit is minimal, avoid syntax-only change
+- avoid writing redundant or short comment
 - do not delete existing comment
