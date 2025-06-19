@@ -3,14 +3,18 @@
 - This is a Unity 2022.3 project
 - The path of the Unity command-line tool is OS-dependent:
   - `C:\Program Files\Unity\Hub\Editor\2022.3.62f1\Editor\Unity.exe` on Windows
-  - `/home/peng/Unity/Hub/Editor/2022.3.62f1/Editor/Unity` on Linux
+  - `~/Unity/Hub/Editor/2022.3.62f1/Editor/Unity` on Linux
 - The project can be built with `dotnet build <Project Name>.sln`
+- Unit and integration tests should use `Tests` directory under asset or package as the root directory
+- The suffix of each Test Suite class is `Spec` 
 
 # Rules
 - avoid using GUID in asmdef files
 - build with dotnet to figure out build errors
 - compile the project often to verify your work
 - any field or variable annotated with `[Required]` cannot be null, do not check if they are null
+- when executing unit tests or integration tests, use batch mode count the number of tests executed and the number of tests passed
+
+# Global rules
 - make sure each edit is minimal, avoid syntax-only change
 - do not delete existing comment
-- when executing unit tests or integration tests, use batch mode count the number of tests executed and the number of tests passed

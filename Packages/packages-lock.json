@@ -20,6 +20,15 @@
       "dependencies": {},
       "url": "http://package.openupm.com"
     },
+    "com.justinpbarnett.unity-mcp": {
+      "version": "https://github.com/justinpbarnett/unity-mcp.git?path=/UnityMcpBridge",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "cbe9b3a2f00e1bbc8f353ea71514580732922ed7"
+    },
     "com.tayx.graphy": {
       "version": "3.0.5",
       "depth": 0,
@@ -91,6 +100,13 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.5",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
