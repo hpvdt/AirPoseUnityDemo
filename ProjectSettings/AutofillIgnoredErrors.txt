@@ -1,0 +1,3 @@
+Panel (FoldingPanelBehaviour.table) Error_NoValidComponentFound
+Panel (FoldingPanelBehaviour.row) Error_NoValidComponentFound
+FoldingPanel (FoldingPanelBehaviour.row) Error_NoValidComponentFound

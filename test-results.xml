@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="12" result="Passed" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.1141472">
+  <test-suite type="TestSuite" id="1000" name="AirPoseDemo" fullname="AirPoseDemo" runstate="Runnable" testcasecount="109" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.114147" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1128" name="ca.hpvdt.mavlinkapi.Tests.dll" fullname="/home/peng/git/AirPoseUnityDemo/Library/ScriptAssemblies/ca.hpvdt.mavlinkapi.Tests.dll" runstate="Runnable" testcasecount="107" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.109863" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="166744" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1129" name="MAVLinkAPI" fullname="MAVLinkAPI" runstate="Runnable" testcasecount="107" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.109354" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1130" name="Tests" fullname="MAVLinkAPI.Tests" runstate="Runnable" testcasecount="107" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.108967" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1134" name="UI" fullname="MAVLinkAPI.Tests.UI" runstate="Runnable" testcasecount="15" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.108214" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1055" name="InputWithHistorySpec" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" testcasecount="12" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.107452" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1058" name="DropdownSelection_UpdatesInputField_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.DropdownSelection_UpdatesInputField_Test" methodname="DropdownSelection_UpdatesInputField_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="1195365355" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.059481" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="DuplicateInput_IsNotAddedToHistory_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.DuplicateInput_IsNotAddedToHistory_Test" methodname="DuplicateInput_IsNotAddedToHistory_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="193341401" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003898" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="EmptyInput_IsNotAddedToHistory_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.EmptyInput_IsNotAddedToHistory_Test" methodname="EmptyInput_IsNotAddedToHistory_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="825267903" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003161" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="HistoryPersistence_SavesAndLoads_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.HistoryPersistence_SavesAndLoads_Test" methodname="HistoryPersistence_SavesAndLoads_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="762349557" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003465" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="HistorySize_IsLimited_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.HistorySize_IsLimited_Test" methodname="HistorySize_IsLimited_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="2064756413" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.004130" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="InputSubmission_AddsToHistoryAndDropdown_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.InputSubmission_AddsToHistoryAndDropdown_Test" methodname="InputSubmission_AddsToHistoryAndDropdown_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="92952422" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003215" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="InputSubmission_ClearsInputField_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.InputSubmission_ClearsInputField_Test" methodname="InputSubmission_ClearsInputField_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="388221882" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003119" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="Persistence_IsDisabled_WhenIdIsNull_Test" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.Persistence_IsDisabled_WhenIdIsNull_Test" methodname="Persistence_IsDisabled_WhenIdIsNull_Test" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="939372638" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003194" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="ShouldMemorizeInputOnSubmit" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.ShouldMemorizeInputOnSubmit" methodname="ShouldMemorizeInputOnSubmit" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="1286659646" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003292" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="ShouldMoveExistingInputToFront" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.ShouldMoveExistingInputToFront" methodname="ShouldMoveExistingInputToFront" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="1706197993" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003256" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="ShouldNotMemorizeEmptyInput" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.ShouldNotMemorizeEmptyInput" methodname="ShouldNotMemorizeEmptyInput" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="344447561" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003019" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="ShouldUpdateHistoryOnNewInput" fullname="MAVLinkAPI.Tests.UI.InputWithHistorySpec.ShouldUpdateHistoryOnNewInput" methodname="ShouldUpdateHistoryOnNewInput" classname="MAVLinkAPI.Tests.UI.InputWithHistorySpec" runstate="Runnable" seed="808925558" result="Passed" start-time="2025-06-21 05:43:11Z" end-time="2025-06-21 05:43:11Z" duration="0.003327" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
