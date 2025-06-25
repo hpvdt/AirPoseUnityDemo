@@ -9,23 +9,20 @@ public class QuaternionSpike
     private static List<Quaternion> anchors()
     {
         // not used, only for debugging
-        
+
         var anchors = new List<Quaternion>();
         anchors.Add(Quaternion.Euler(90f, 0f, 0f).normalized);
         anchors.Add(Quaternion.Euler(0f, 90f, 0f).normalized);
         anchors.Add(Quaternion.Euler(0f, 0f, 90f).normalized);
         return anchors;
     }
-    
+
     // A Test behaves as an ordinary method
     [Test]
     public void PrintAnchors()
     {
         var aa = anchors();
-        foreach (var a in aa)
-        {
-            Debug.Log(a);
-        }
+        foreach (var a in aa) Debug.Log(a);
         foreach (var a in aa)
         {
             var inv = Quaternion.Inverse(a);

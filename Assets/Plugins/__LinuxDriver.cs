@@ -4,7 +4,7 @@ namespace Plugins
     {
         /*
          We have 2 options:
-         
+
          - https://github.com/wheaney/breezy-desktop?tab=readme-ov-file
 
            can be installed with a single sh: https://github.com/wheaney/breezy-desktop/releases/latest/download/breezy_vulkan_setup

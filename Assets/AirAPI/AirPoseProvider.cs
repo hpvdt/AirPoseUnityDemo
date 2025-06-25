@@ -43,17 +43,17 @@ namespace AirAPI
     public static extern IntPtr GetQuaternion();
 
 #else
-    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int StartConnection();
+        [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StartConnection();
 
-    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int StopConnection();
+        [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int StopConnection();
 
-    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr GetEuler();
+        [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr GetEuler();
 
-    [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr GetQuaternion();
+        [DllImport("libar_drivers.so", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr GetQuaternion();
 
 #endif
 
@@ -119,7 +119,7 @@ namespace AirAPI
 
             public Rotation(AirPoseProvider outer)
             {
-                this.Outer = outer;
+                Outer = outer;
             }
 
             public Quaternion Glasses = Quaternion.identity;
@@ -200,13 +200,9 @@ namespace AirAPI
             protected virtual Quaternion Read()
             {
                 if (Outer.useQuaternion)
-                {
                     return Read_direct();
-                }
                 else
-                {
                     return Read_euler();
-                }
             }
 
             public void UpdateFromGlasses()
