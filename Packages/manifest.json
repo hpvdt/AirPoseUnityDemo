@@ -57,8 +57,9 @@
         "io.github.gkngkc.unity-standalone-file-browser",
         "com.yamldotnet.uni",
         "com.unity.uiextensions",
+        "com.yasirkula.ingamedebugconsole",
         "com.jonagill.autofill",
-        "com.yasirkula.ingamedebugconsole"
+        "net.tnrd.autohook"
       ]
     }
   ]
