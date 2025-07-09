@@ -6,7 +6,7 @@
 
 # Auto detect text files and perform LF normalization
 * text=auto eol=lf
-
+.* text=auto eol=lf
 #cs
 *.cs     diff=csharp
 
