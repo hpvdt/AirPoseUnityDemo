@@ -1,0 +1,1 @@
+see @AGENTS.md and other AGENTS.md under submodules

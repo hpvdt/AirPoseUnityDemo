@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity",
+    "com.coplaydev.unity-mcp": "7.0.0",
     "com.ecasillas.missingrefsfinder": "https://github.com/tribbloid/unity-missing-references-finder.git",
     "com.tayx.graphy": "3.0.5",
     "com.unity.ai.navigation": "1.1.7",
@@ -52,8 +52,9 @@
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
-      "url": "http://package.openupm.com",
+      "url": "https://package.openupm.com",
       "scopes": [
+        "com.coplaydev.unity-mcp",
         "com.tayx.graphy",
         "io.github.gkngkc.unity-standalone-file-browser",
         "com.yamldotnet.uni",

@@ -28,8 +28,9 @@ MonoBehaviour:
     m_ConfigSource: 0
   - m_Id: scoped:project:package.openupm.com
     m_Name: package.openupm.com
-    m_Url: http://package.openupm.com
+    m_Url: https://package.openupm.com
     m_Scopes:
+    - com.coplaydev.unity-mcp
     - com.tayx.graphy
     - io.github.gkngkc.unity-standalone-file-browser
     - com.yamldotnet.uni

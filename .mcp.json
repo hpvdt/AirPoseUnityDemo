@@ -33,11 +33,11 @@
       "type": "stdio"
     },
     "unityMCP": {
-      "command": "/home/peng/.local/bin/uv",
+      "command": "uv",
       "args": [
         "run",
         "--directory",
-        "/home/peng/bin/UnityMCP/UnityMcpServer/src",
+        "~/bin/UnityMCP/UnityMcpServer/src",
         "server.py"
       ]
     }
