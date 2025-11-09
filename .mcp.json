@@ -37,9 +37,12 @@
       "args": [
         "run",
         "--directory",
-        "~/bin/UnityMCP/UnityMcpServer/src",
+        "$HOME/.local/share/UnityMCP/UnityMcpServer/src",
         "server.py"
-      ]
+      ],
+      "env": {
+        "HOME": "${HOME}"
+      }
     }
   }
 }
