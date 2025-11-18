@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__fetch__fetch",
+      "mcp__memory__read_graph",
+      "mcp__memory__search_nodes",
+      "mcp__deepwiki__read_wiki_structure",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_install",
+      "Bash(/home/peng/.local/bin/uv run:*)",
+      "Bash(/home/peng/Unity/Hub/Editor/2022.3.62f3/Editor/Unity:*)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(journalctl:*)",
+      "Bash(netstat:*)",
+      "Bash(python3:*)",
+      "Bash(ss:*)",
+      "Bash(sudo strace:*)",
+      "Bash(timeout:*)",
+      "Read(//home/peng/**)",
+      "Bash(uvx:*)",
+      "Bash(nc:*)",
+      "Bash(/home/peng/.cache/uv/archive-v0/VTn3tH5b1UV3lgt9qBMkE/bin/mcp-for-unity:*)",
+      "mcp__UnityMCP",
+      "mcp__UnityMCP__*"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "fetch",
+    "playwright",
+    "memory",
+    "deepwiki",
+    "UnityMCP"
+  ]
+}
