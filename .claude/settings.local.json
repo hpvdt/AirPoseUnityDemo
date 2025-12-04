@@ -22,7 +22,7 @@
       "Bash(nc:*)",
       "Bash(/home/peng/.cache/uv/archive-v0/VTn3tH5b1UV3lgt9qBMkE/bin/mcp-for-unity:*)",
       "mcp__UnityMCP",
-      "mcp__UnityMCP__*"
+      "Bash(dotnet build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
