@@ -164,3 +164,11 @@ UserSettings
 
 # MacOS
 **/.DS_Store
+
+# Unity temporary test scenes
+/[Aa]ssets/*TestScene*.unity
+/[Aa]ssets/*TestScene*.unity.meta
+/[Aa]ssets/InitTestScene*.unity
+/[Aa]ssets/InitTestScene*.unity.meta
+/[Aa]ssets/*TempTest*.unity
+/[Aa]ssets/*TempTest*.unity.meta
