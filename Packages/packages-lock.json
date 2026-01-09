@@ -15,7 +15,7 @@
       }
     },
     "com.coplaydev.unity-mcp": {
-      "version": "8.5.0",
+      "version": "9.0.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -270,7 +270,7 @@
       "url": "https://package.openupm.com"
     },
     "com.yasirkula.ingamedebugconsole": {
-      "version": "1.8.3",
+      "version": "1.8.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
