@@ -4,6 +4,7 @@
 FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
 
 cd $FWDIR/ar-drivers-rs && \
+cargo clean && \
 cargo build --release
 
 TARGET="$FWDIR/Assets/Plugins/libar_drivers.so"
