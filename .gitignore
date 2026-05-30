@@ -120,6 +120,7 @@ ExportedObj/
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
@@ -172,3 +173,6 @@ UserSettings
 /[Aa]ssets/InitTestScene*.unity.meta
 /[Aa]ssets/*TempTest*.unity
 /[Aa]ssets/*TempTest*.unity.meta
+
+# AI Agent
+.codex
