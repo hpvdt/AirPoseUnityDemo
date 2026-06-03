@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "ca.hpvdt.arglassessdk": {
+      "version": "file:ARGlassesSDK",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.xr.management": "4.5.1"
+      }
+    },
     "ca.hpvdt.mavlinkapi": {
       "version": "file:MAVLinkAPI",
       "depth": 0,
