@@ -8,7 +8,7 @@
         "com.unity.xr.management": "4.5.1"
       }
     },
-    "ca.hpvdt.mavlinkapi": {
+    "ca.hpvdt.mavlinksdk": {
       "version": "file:MAVLinkAPI",
       "depth": 0,
       "source": "embedded",
