@@ -159,6 +159,7 @@ Temp
 UserSettings
 .idea
 .vscode
+.history
 
 # Document
 **/.obsidian
