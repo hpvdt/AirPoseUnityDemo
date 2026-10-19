@@ -40,11 +40,10 @@
       "url": "https://package.openupm.com"
     },
     "com.ecasillas.missingrefsfinder": {
-      "version": "https://github.com/tribbloid/unity-missing-references-finder.git",
+      "version": "file:MissingReferencesFinder",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "0c2024efe13f648dd0efc4f70d86ec028f9e8bb6"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.jonagill.autofill": {
       "version": "1.0.7",

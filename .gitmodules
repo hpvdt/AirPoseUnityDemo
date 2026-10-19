@@ -4,3 +4,6 @@
 [submodule "Packages/ARGlassesSDK"]
 	path = Packages/ARGlassesSDK
 	url = https://github.com/hpvdt/UnityARGlassesSDK
+[submodule "Packages/MissingReferencesFinder"]
+	path = Packages/MissingReferencesFinder
+	url = https://github.com/tribbloid/unity-missing-references-finder
