@@ -55,7 +55,6 @@
       "scopes": [
         "com.coplaydev.unity-mcp",
         "com.tayx.graphy",
-        "io.github.gkngkc.unity-standalone-file-browser",
         "com.yamldotnet.uni",
         "com.unity.uiextensions",
         "com.yasirkula.ingamedebugconsole",
